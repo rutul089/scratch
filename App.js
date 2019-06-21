@@ -7,9 +7,18 @@
  */
 
 import React, { Component } from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  View,
+  ImageBackground,
+  Dimensions
+} from "react-native";
 import { Text, Block } from "./src/components";
+const { width, height } = Dimensions.get("window");
 
+import SplashScreen from "react-native-splash-screen";
+import AppNavigator from "./src/navigation/AppNavigator";
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
   android:
@@ -17,14 +26,12 @@ const instructions = Platform.select({
     "Shake or press menu button for dev menu"
 });
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
+  componentDidMount() {
+    SplashScreen.hide();
+  }
   render() {
-    return (
-      <Block>
-        <Text h1> Login</Text>
-      </Block>
-    );
+    return <AppNavigator />;
   }
 }
 

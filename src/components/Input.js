@@ -13,12 +13,17 @@ export default class Input extends Component {
   };
 
   renderLabel() {
-    const { label, error } = this.props;
+    const { label, error, labelColor } = this.props;
 
     return (
       <Block flex={false}>
         {label ? (
-          <Text gray2={!error} accent={error}>
+          <Text
+            gray2={!error}
+            accent={error}
+            style={{ color: labelColor }}
+            size={13}
+          >
             {label}
           </Text>
         ) : null}
@@ -111,7 +116,7 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.black,
     borderRadius: theme.sizes.radius,
     fontSize: theme.sizes.font,
-    fontWeight: "500",
+    fontWeight: "400",
     color: theme.colors.black,
     height: theme.sizes.base * 3
   },
@@ -121,6 +126,7 @@ const styles = StyleSheet.create({
     width: theme.sizes.base * 2,
     height: theme.sizes.base * 2,
     top: theme.sizes.base,
+    backgroundColor: "transparent",
     right: 0
   }
 });

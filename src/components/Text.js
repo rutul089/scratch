@@ -15,6 +15,7 @@ export default class Typography extends Component {
       body,
       caption,
       small,
+      button,
       size,
       transform,
       align,
@@ -42,6 +43,7 @@ export default class Typography extends Component {
       style,
       fontFamily,
       children,
+      note,
       ...props
     } = this.props;
 
@@ -68,6 +70,7 @@ export default class Typography extends Component {
       medium && styles.medium,
       light && styles.light,
       center && styles.center,
+      button && styles.button,
       right && styles.right,
       color && styles[color],
       color && !styles[color] && { color },
@@ -78,6 +81,7 @@ export default class Typography extends Component {
       tertiary && styles.tertiary,
       black && styles.black,
       white && styles.white,
+      note && styles.note,
       gray && styles.gray,
       gray2 && styles.gray2,
       style // rewrite predefined styles
@@ -127,6 +131,7 @@ const styles = StyleSheet.create({
   black: { color: theme.colors.black },
   white: { color: theme.colors.white },
   gray: { color: theme.colors.gray },
+  note: { color: theme.colors.body },
   gray2: { color: theme.colors.gray2 },
   // fonts
   light: theme.fonts.light,
@@ -134,6 +139,7 @@ const styles = StyleSheet.create({
   h2: theme.fonts.h2,
   h3: theme.fonts.h3,
   h4: theme.fonts.h4,
+  button:theme.fonts.button,
   title: theme.fonts.title,
   body: theme.fonts.body,
   caption: theme.fonts.caption,
