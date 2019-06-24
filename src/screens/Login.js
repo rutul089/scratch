@@ -19,7 +19,7 @@ class Login extends Component {
   };
   render() {
     return (
-      <Block flex={1} color="#DCDCDC">
+      <Block flex={1} white>
         <ImageBackground
           resizeMode="cover"
           source={require("../../assets/image/base/bg.jpeg")}
@@ -31,7 +31,7 @@ class Login extends Component {
             borderBottomLeftRadius: 100
           }}
         >
-          <Block middle color="#rgba(255,255,255,0.4)">
+          <Block middle color="#rgba(255,255,255,0.5)">
             <Text h1 size={24} style={{ marginLeft: theme.sizes.padding }}>
               Welcome Back !
             </Text>
