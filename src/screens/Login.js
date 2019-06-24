@@ -14,6 +14,9 @@ import { theme } from "../constants";
 const { width, height } = Dimensions.get("window");
 // create a component
 class Login extends Component {
+  static navigationOptions = {
+    header: null
+  };
   render() {
     return (
       <Block flex={1} color="#DCDCDC">
@@ -74,7 +77,9 @@ class Login extends Component {
             >
               Forgot Password?
             </Text>
-            <Button color={theme.colors.primary}>
+            <Button color={theme.colors.primary}
+            onPress ={() => this.props.navigation.navigate("Main")}
+            >
               <Text
                 white
                 bold
@@ -84,7 +89,10 @@ class Login extends Component {
                 Login
               </Text>
             </Button>
-            <Button color="transparent">
+            <Button
+              color="transparent"
+              onPress={() => this.props.navigation.navigate("SignUp")}
+            >
               <Text center bold primary style={{ margin: theme.sizes.padding }}>
                 Create Account Here
               </Text>

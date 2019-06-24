@@ -22,7 +22,6 @@ const sizes = {
   font: 14,
   radius: 8,
   border: 1,
-  iconSize: 25,
   //-- Font Size
   h1: 40,
   h2: 32,
@@ -34,13 +33,13 @@ const sizes = {
   caption: 12,
   small: 9,
   body: 14,
-  base: 16,
   item: 18,
-  btnHight: 50
+  btnHight: 50,
+  iconSize: 32
 };
 const fontFamily = {
   regular: "Nunito-Regular",
-  light: "Poppins-Light",
+  light: "Nunito-Light ",
   bold: "Nunito-Bold",
   semiBold: "Nunito-SemiBold",
   medium: "Nunito-Black"
@@ -87,5 +86,6 @@ const fonts = {
     lineHeight: 22
   }
 };
+
 
 export { colors, sizes, fonts, fontFamily };
