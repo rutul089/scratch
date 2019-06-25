@@ -8,6 +8,7 @@ import {
   TextInput,
   Image,
   ScrollView,
+  TouchableNativeFeedback,
   TouchableOpacity,
   Dimensions
 } from "react-native";
@@ -18,6 +19,7 @@ import { Block, Input, Text } from "../components";
 const { width, height } = Dimensions.get("window");
 // create a component
 class Search extends Component {
+ 
   renderSearchView() {
     return (
       <Block
@@ -51,7 +53,48 @@ class Search extends Component {
       </Block>
     );
   }
+  renderRecommendationItem(item) {
+    return (
+      <Block flex={0}>
+        <TouchableOpacity onPress={() => alert("test")}>
+          <Card style={styles.recommendation}>
+            <Image
+              resizeMode="cover"
+              style={[styles.recommendationImage]}
+              source={item.image}
+            />
+            <CardItem
+              style={{
+                height: theme.sizes.padding * 3,
+                justifyContent: "flex-start",
+                paddingBottom: 0,
+                paddingLeft: 2,
+                paddingRight: 0,
+                paddingTop: 0
+              }}
+            >
+              <Text
+                weight={"400"}
+                button
+                black
+                numberOfLines={3}
+                ellipsizeMode="tail"
+                style={{
+                  textAlign: "left",
+                  alignItems: "flex-start",
+                  paddingTop: 0
+                }}
+              >
+                {item.recipeName}
+              </Text>
+            </CardItem>
+          </Card>
+        </TouchableOpacity>
+      </Block>
+    );
+  }
 
+  /*
   renderRecommendationItem(item) {
     return (
       <Block flex={0} shadow column style={styles.recommendation}>
@@ -78,6 +121,7 @@ class Search extends Component {
       </Block>
     );
   }
+  */
   //-- Render Trending
   renderTrending = () => {
     const { trending } = this.props;

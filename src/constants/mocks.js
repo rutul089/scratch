@@ -36,7 +36,7 @@ const recipe = [
     image: require("../../assets/image/base/img4.jpg")
   },
   {
-    id: "3",
+    id: "4",
     userName: "Rachel Simpson",
     picture: require("../../assets/image/base/avtar1.jpg"),
     time: "30min ago",
@@ -46,6 +46,18 @@ const recipe = [
     like: "32 Likes",
     isLike: true,
     image: require("../../assets/image/base/img3.jpeg")
+  },
+  {
+    id: "5",
+    userName: "Judith Gibson",
+    picture: require("../../assets/image/base/avtar.jpg"),
+    time: "1h ago",
+    recipeName: "Engine-Cooked Honey Orange Pancake",
+    recipeNot:
+      "Apparently we had reached a great height in the atmosphere, for the sky was.",
+    like: "32 Likes",
+    isLike: true,
+    image: require("../../assets/image/base/img5.jpg")
   }
 ];
 
@@ -100,4 +112,61 @@ const recommended = [
   }
 ];
 
-export { recipe, trending, recommended  };
+const recipeList = [
+  {
+    id: "1",
+    tag: ["Recipes", "Save"],
+    recipeName: "French Fries",
+    image: require("../../assets/image/base/rec1.jpg")
+  },
+  {
+    id: "2",
+    tag: ["Recipes"],
+    recipeName: "Empanadas Dumplings",
+    image: require("../../assets/image/base/rec4.jpg")
+  },
+  {
+    id: "3",
+    tag: ["Recipes", "Save"],
+    recipeName: "Pancake",
+    image: require("../../assets/image/base/rec5.jpg")
+  },
+  {
+    id: "4",
+    tag: ["Recipes"],
+    recipeName: "Clam chowder",
+    image: require("../../assets/image/base/tred1.jpg")
+  },
+  {
+    id: "5",
+    tag: ["Recipes"],
+    recipeName: "Banana and Mandarin Buns",
+    image: require("../../assets/image/base/tred2.jpg")
+  },
+  {
+    id: "6",
+    tag: ["Follow"],
+    recipeName: "Coconut Pound Cake",
+    image: require("../../assets/image/base/tred5.jpeg")
+  },
+  {
+    id: "7",
+    tag: ["Save"],
+    recipeName: "Cardamom and Cranberry ",
+    image: require("../../assets/image/base/tred3.jpeg")
+  },
+  {
+    id: "8",
+    tag: ["Recipes", "Save"],
+    recipeName: "Clam chowder",
+    image: require("../../assets/image/base/tred1.jpg")
+  },
+  {
+    id: "9",
+    tag: ["Recipes"],
+    recipeName: "Sauted Orange & Mustard",
+    image: require("../../assets/image/base/tred4.jpg")
+  }
+];
+
+export { recipe, trending, recommended, recipeList };

@@ -3,7 +3,10 @@ import { Switch, Platform } from 'react-native';
 
 import { theme } from '../constants';
 
-const GRAY_COLOR = 'rgba(168, 182, 200, 0.30)';
+// const GRAY_COLOR = 'rgba(168, 182, 200, 0.30)';
+const GRAY_COLOR = 'rgba(255, 255, 255, 1)';
+const BG = "#CCCCCC";
+
 
 export default class SwitchInput extends React.PureComponent {
   render() {
@@ -12,16 +15,16 @@ export default class SwitchInput extends React.PureComponent {
 
     if (Platform.OS === 'android') {
       thumbColor = GRAY_COLOR;
-      if (props.value) thumbColor = theme.colors.secondary;
+      if (props.value) thumbColor = theme.colors.primary;
     }
 
     return (
       <Switch
         thumbColor={thumbColor}
-        ios_backgroundColor={GRAY_COLOR}
+        ios_backgroundColor={BG}
         trackColor={{
           // false: GRAY_COLOR,
-          true: theme.colors.secondary
+          true: theme.colors.primary
         }}
         value={value}
         {...props}

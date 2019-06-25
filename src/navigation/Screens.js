@@ -12,11 +12,12 @@ import Search from "../screens/Search";
 import Profile from "../screens/Profile";
 import RecipeNav from "./RecipeNav";
 import { Icon } from "native-base";
+import ProfileSetting from "./ProfileSetting";
 
 //-- Exporting navigation class
 
 const DashboardTabNavigator = createBottomTabNavigator(
-  { Search, RecipeNav, Profile },
+  { Search, RecipeNav, ProfileSetting },
   {
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {

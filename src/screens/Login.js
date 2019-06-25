@@ -93,7 +93,7 @@ class Login extends Component {
               color="transparent"
               onPress={() => this.props.navigation.navigate("SignUp")}
             >
-              <Text center bold primary style={{ margin: theme.sizes.padding }}>
+              <Text center bold primary>
                 Create Account Here
               </Text>
             </Button>

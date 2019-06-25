@@ -18,6 +18,7 @@ export default class Typography extends Component {
       button,
       size,
       transform,
+      font,
       align,
       // styling
       regular,
@@ -55,6 +56,7 @@ export default class Typography extends Component {
       h4 && styles.h4,
       title && styles.title,
       body && styles.body,
+      font && styles.font,
       caption && styles.caption,
       small && styles.small,
       size && { fontSize: size },
@@ -108,7 +110,7 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily.regular
   },
   bold: {
-    fontWeight: "bold",
+    fontWeight: "700",
     fontFamily: theme.fontFamily.bold
   },
   semibold: {
@@ -147,6 +149,10 @@ const styles = StyleSheet.create({
   },
   body: {
     fontSize: theme.sizes.body
+  },
+  font: {
+    fontSize: theme.sizes.font,
+    paddingVertical: theme.sizes.padding / 4,
   },
   caption: theme.fonts.caption,
   small: theme.fonts.small

@@ -25,7 +25,7 @@ const sizes = {
   //-- Font Size
   h1: 40,
   h2: 32,
-  h3: 23,
+  h3: 24,
   h4: 18,
   tittle: 20,
   button: 16,
