@@ -25,7 +25,7 @@ const { width } = Dimensions.get("window");
 // create a component
 class Profile extends Component {
   state = {
-    active: "Products",
+    active: "Recipes",
     recipeList: []
   };
 
@@ -60,16 +60,14 @@ class Profile extends Component {
 
   handleTab = tab => {
     const { recipeList } = this.props;
-    // const filtered = recipeList.filter(category =>
-    //   category.tags.includes(tab)
-    // );
+    const filtered = recipeList.filter(category => category.tag.includes(tab));
 
-    this.setState({ active: tab });
+    this.setState({ active: tab, recipeList: filtered });
   };
 
   renderHeader() {
     return (
-      <Block flex={0} row>
+      <Block flex={false} row>
         <Block flex={0.25}>
           <Thumbnail
             large
@@ -77,9 +75,22 @@ class Profile extends Component {
           />
         </Block>
         <Block flex={0.75} column style={{ marginLeft: theme.sizes.padding }}>
-          <Text button black>
-            Nick Evans
-          </Text>
+          <Block row>
+            <Text button black style={{ flex: 1 }}>
+              Nick Evans
+            </Text>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("EditProfile")}
+            >
+              <Image
+                source={require("../../assets/image/icons/ic_edit.png")}
+                style={{
+                  height: theme.sizes.iconSize - 8,
+                  width: theme.sizes.iconSize - 8
+                }}
+              />
+            </TouchableOpacity>
+          </Block>
           <Text
             body
             color={theme.colors.body}
@@ -87,7 +98,11 @@ class Profile extends Component {
           >
             Potato Master
           </Text>
-          <Block row flex={1} style={{ marginTop: theme.sizes.padding / 2 }}>
+          <Block
+            row
+            flex={false}
+            style={{ marginTop: theme.sizes.padding / 2 }}
+          >
             <Text body color={theme.colors.body} style={{ flex: 0.5 }}>
               584 followers
             </Text>
@@ -110,7 +125,7 @@ class Profile extends Component {
         onPress={() => this.handleTab(tab)}
         style={[styles.tab, isActive ? styles.active : null]}
       >
-        <Text size={16} medium gray={!isActive} secondary={isActive}>
+        <Text button regular gray={!isActive} black={isActive}>
           {tab}
         </Text>
       </TouchableOpacity>
@@ -118,50 +133,61 @@ class Profile extends Component {
   }
 
   render() {
-    const tabs = ["Recipes", "Save", "Follow"];
+    const tabs = ["Recipes", "Save", "Following"];
     const { recipeList } = this.state;
 
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <ScrollView>
-          <Block
-            flex={1}
-            style={{
-              marginLeft: theme.sizes.padding,
-              marginRight: theme.sizes.padding,
-              marginTop: theme.sizes.padding
-            }}
+        <Block
+          style={{
+            paddingHorizontal: theme.sizes.padding,
+            paddingVertical: theme.sizes.padding
+          }}
+        >
+          {this.renderHeader()}
+          <Divider style={{ marginTop: theme.sizes.padding + 5, flex: 0 }} />
+          <Block flex={false} row style={styles.tabs}>
+            {tabs.map(tab => this.renderTab(tab))}
+          </Block>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{ paddingVertical: theme.sizes.base * 2 }}
           >
-            {this.renderHeader()}
-            <Divider style={{ marginTop: theme.sizes.padding + 5 }} />
-            <Block flex={false} row style={styles.tabs}>
-              {tabs.map(tab => this.renderTab(tab))}
-            </Block>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              style={{ paddingVertical: theme.sizes.base * 2 }}
-            >
-              <Block flex={false} row space="between" style={styles.categories}>
-                {recipeList.map(category => (
-                  <TouchableOpacity key={category.recipeName}>
-                    <Card center middle shadow style={styles.category}>
-                      <Badge
-                        margin={[0, 0, 15]}
-                        size={50}
-                        color="rgba(41,216,143,0.20)"
+            <Block flex={false} row space="between" style={styles.categories}>
+              {recipeList.map(category => (
+                <TouchableOpacity
+                  key={category.id}
+                  onPress={() => alert(category.recipeName)}
+                >
+                  <Card style={styles.category}>
+                    <Image
+                      resizeMode="cover"
+                      style={[styles.recommendationImage]}
+                      source={category.image}
+                    />
+                    <CardItem
+                      style={{
+                        height: theme.sizes.padding * 3,
+                        justifyContent: "center"
+                      }}
+                    >
+                      <Text
+                        weight={"400"}
+                        button
+                        black
+                        numberOfLines={2}
+                        ellipsizeMode="tail"
+                        style={styles.textStyle}
                       >
-                        <Image source={category.image} />
-                      </Badge>
-                      <Text medium height={20}>
                         {category.recipeName}
                       </Text>
-                    </Card>
-                  </TouchableOpacity>
-                ))}
-              </Block>
-            </ScrollView>
-          </Block>
-        </ScrollView>
+                    </CardItem>
+                  </Card>
+                </TouchableOpacity>
+              ))}
+            </Block>
+          </ScrollView>
+        </Block>
       </SafeAreaView>
     );
   }
@@ -178,6 +204,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff"
   },
+  textStyle: {
+    textAlign: "center",
+    alignItems: "center",
+    padding: (theme.sizes.padding - 10) / 2
+  },
   tab: {
     marginRight: theme.sizes.base * 2,
     paddingBottom: theme.sizes.base
@@ -188,21 +219,27 @@ const styles = StyleSheet.create({
   },
   tabs: {
     justifyContent: "space-between",
-
     borderBottomColor: theme.colors.gray3,
     borderBottomWidth: 1,
-    marginVertical: theme.sizes.base * 2
+    marginTop: theme.sizes.base * 2
   },
   categories: {
     flexWrap: "wrap",
-    paddingHorizontal: theme.sizes.base * 2,
     marginBottom: theme.sizes.base * 3.5
   },
   category: {
     // this should be dynamic based on screen width
     minWidth: (width - theme.sizes.padding * 2.4 - theme.sizes.base) / 2,
     maxWidth: (width - theme.sizes.padding * 2.4 - theme.sizes.base) / 2,
-    maxHeight: (width - theme.sizes.padding * 2.4 - theme.sizes.base) / 2
+    maxHeight: (width - theme.sizes.padding * 3) / 2,
+    backgroundColor: theme.colors.white,
+    overflow: "hidden",
+    marginBottom: theme.sizes.padding,
+    borderRadius: theme.sizes.radius
+  },
+  recommendationImage: {
+    width: "100%",
+    maxHeight: (width - theme.sizes.padding * 2.4 - theme.sizes.base) / 3
   }
 });
 

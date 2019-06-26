@@ -6,9 +6,10 @@ import { theme } from "../constants";
 import Profile from "./../screens/Profile";
 import Settings from "./../screens/Settings";
 import ChangePwd from "./../screens/ChangePwd";
+import EditProfile from "./../screens/EditProfile";
 
 const Screens = createStackNavigator(
-  { Profile, Settings, ChangePwd },
+  { Profile, Settings, ChangePwd, EditProfile },
   {
     defaultNavigationOptions: {
       headerStyle: {
@@ -24,8 +25,7 @@ const Screens = createStackNavigator(
           source={require("../../assets/image/icons/ic_back.png")}
           style={{
             height: theme.sizes.iconSize - 5,
-            width: theme.sizes.iconSize - 5,
-            marginLeft: Platform.OS === "ios" ? theme.sizes.padding : 0
+            width: theme.sizes.iconSize - 5
           }}
         />
       ),
@@ -42,7 +42,7 @@ const Screens = createStackNavigator(
       headerBackTitleStyle: {
         color: theme.colors.caption,
         fontSize: theme.sizes.caption
-      },
+      }
     }
   }
 );

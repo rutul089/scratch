@@ -10,17 +10,46 @@ import {
   ScrollView,
   TouchableNativeFeedback,
   TouchableOpacity,
+  ImageBackground,
   Dimensions
 } from "react-native";
 import { theme, mocks } from "../constants";
 import { CardItem, Card, Left, Body, Right, Content } from "native-base";
 import { Block, Input, Text } from "../components";
+import { Thumbnail } from "native-base";
 
 const { width, height } = Dimensions.get("window");
 // create a component
 class Search extends Component {
- 
+  state = {
+    searchWord: "",
+    trending: [],
+    recommendation: []
+  };
+
+  componentDidMount() {
+    this.setState({
+      trending: this.props.trending,
+      recommendation: this.props.trending
+    });
+  }
+  handleSearch = () => {
+    const { trending, recommendation } = this.props;
+    let word = this.state.searchWord;
+    if (word.length > 1 && word !== "") {
+      // const filtered = trending.filter(category => category.tag.toLowerCase().includes(tab));
+      const filtered = trending.filter(
+        category =>
+          category.recipeName.toLowerCase().indexOf(word.toLowerCase()) !== -1
+      );
+      this.setState({ trending: filtered });
+      console.log(filtered);
+    }
+
+    // const filtered = recipeList.filter(category => category.tag.includes(tab));
+  };
   renderSearchView() {
+    console.log(this.state.searchWord);
     return (
       <Block
         flex={false}
@@ -38,10 +67,11 @@ class Search extends Component {
               <TextInput
                 underlineColorAndroid="transparent"
                 placeholder="Search recipe, people, or tag"
+                onChangeText={text => this.setState({ searchWord: text })}
                 placeholderTextColor="grey"
                 style={styles.input}
               />
-              <TouchableOpacity onPress={() => alert("filter")}>
+              <TouchableOpacity onPress={() => this.handleSearch()}>
                 <Image
                   source={require("../../assets/image/icons/ic_filter.png")}
                   style={[styles.iconStyle, { tintColor: theme.colors.black }]}
@@ -131,7 +161,7 @@ class Search extends Component {
           style={{ padding: 5 }}
           horizontal
           scrollEnabled
-          showsHorizontalScrollIndicator={true}
+          showsHorizontalScrollIndicator={false}
           scrollEventThrottle={16}
           data={trending}
           keyExtractor={(item, index) => `${index}`}
@@ -149,7 +179,7 @@ class Search extends Component {
           horizontal
           style={{ padding: 5 }}
           scrollEnabled
-          showsHorizontalScrollIndicator={true}
+          showsHorizontalScrollIndicator={false}
           scrollEventThrottle={16}
           data={recommendation}
           keyExtractor={(item, index) => `${index}`}
@@ -164,6 +194,7 @@ class Search extends Component {
         <Block flex={1} style={{ margin: theme.sizes.padding }}>
           {this.renderSearchView()}
           <ScrollView
+            showsHorizontalScrollIndicator={true}
             scrollEventThrottle={16}
             style={{ marginTop: theme.sizes.padding * 1.5 }}
           >
@@ -255,6 +286,20 @@ const styles = StyleSheet.create({
   recommendationImage: {
     width: (width - theme.sizes.padding * 2) / 2.5,
     height: (width - theme.sizes.padding * 3.2) / 2
+  },
+  profile: {
+    width: (width - theme.sizes.padding * 2.2) / 2,
+    alignItems: "center",
+    justifyContent: "flex-end",
+    height: (width - theme.sizes.padding * 3.2) / 2
+  },
+  profiles: {
+    width: (width - theme.sizes.padding * 2.2) / 2,
+    marginRight: theme.sizes.padding / 2,
+    backgroundColor: theme.colors.white,
+    overflow: "hidden",
+    borderRadius: theme.sizes.radius,
+    marginVertical: theme.sizes.padding * 0.5
   },
   shadow: {
     shadowColor: theme.colors.black,

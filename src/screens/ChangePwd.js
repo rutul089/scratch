@@ -16,11 +16,13 @@ class ChangePwd extends Component {
     return {
       headerTitle: "Change Password",
       headerTitleStyle: {
+        fontWeight: "700",
         fontSize: theme.sizes.h3,
-        fontFamily: theme.fontFamily.bold
+        fontFamily: theme.fontFamily.regular
       }
     };
   };
+
   render() {
     return (
       <SafeAreaView flex={1}>

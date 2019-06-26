@@ -57,7 +57,7 @@ class Settings extends Component {
             h3
             bold
             style={{
-              marginTop: theme.sizes.padding / 2,
+              marginTop: theme.sizes.padding /2.5,
               marginRight: theme.sizes.padding,
               marginLeft: theme.sizes.padding
             }}

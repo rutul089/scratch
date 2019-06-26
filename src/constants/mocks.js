@@ -145,7 +145,7 @@ const recipeList = [
   },
   {
     id: "6",
-    tag: ["Follow"],
+    tag: ["Following"],
     recipeName: "Coconut Pound Cake",
     image: require("../../assets/image/base/tred5.jpeg")
   },
@@ -163,7 +163,7 @@ const recipeList = [
   },
   {
     id: "9",
-    tag: ["Recipes"],
+    tag: ["Recipes", "Following"],
     recipeName: "Sauted Orange & Mustard",
     image: require("../../assets/image/base/tred4.jpg")
   }
