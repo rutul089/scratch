@@ -31,7 +31,12 @@ class Settings extends Component {
                 text: "No",
                 style: "cancel"
               },
-              { text: "Yes", onPress: () => navigation.navigate("Auth") }
+              {
+                text: "Yes",
+                onPress: () => {
+                  navigation.navigate("Auth");
+                }
+              }
             ])
           }
           style={{ alignItems: "center", justifyContent: "center" }}
@@ -57,7 +62,7 @@ class Settings extends Component {
             h3
             bold
             style={{
-              marginTop: theme.sizes.padding /2.5,
+              marginTop: theme.sizes.padding / 2.5,
               marginRight: theme.sizes.padding,
               marginLeft: theme.sizes.padding
             }}

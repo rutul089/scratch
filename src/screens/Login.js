@@ -4,6 +4,7 @@ import {
   View,
   StyleSheet,
   Dimensions,
+  SafeAreaView,
   ScrollView,
   KeyboardAvoidingView
 } from "react-native";
@@ -11,7 +12,6 @@ import { Block, Text, Input, Button } from "./../components";
 import { ImageBackground } from "react-native";
 import { theme } from "../constants";
 import { Content } from "native-base";
-import { SafeAreaView } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 // create a component
@@ -19,6 +19,7 @@ class Login extends Component {
   static navigationOptions = {
     header: null
   };
+
   render() {
     return (
       <SafeAreaView flex={1}>
@@ -83,7 +84,9 @@ class Login extends Component {
                 </Text>
                 <Button
                   color={theme.colors.primary}
-                  onPress={() => this.props.navigation.navigate("Main")}
+                  onPress={() => {
+                    this.props.navigation.navigate("Main");
+                  }}
                 >
                   <Text
                     white

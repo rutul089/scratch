@@ -14,22 +14,54 @@ import {
   ImageBackground,
   Dimensions
 } from "react-native";
-import { Text, Block } from "./src/components";
+import { Text, Block, Input } from "./src/components";
 const { width, height } = Dimensions.get("window");
 
 import SplashScreen from "react-native-splash-screen";
 import AppNavigator from "./src/navigation/AppNavigator";
-const instructions = Platform.select({
-  ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
-  android:
-    "Double tap R on your keyboard to reload,\n" +
-    "Shake or press menu button for dev menu"
-});
+import { TouchableOpacity } from "react-native";
+
+import axios from "axios";
+import { theme } from "./src/constants";
+import { Body } from "native-base";
+import Screens from "./src/navigation/Screens";
 
 export default class App extends Component {
   componentDidMount() {
     SplashScreen.hide();
   }
+
+  state = {
+    tittle: "",
+    body: "",
+    userId: ""
+  };
+
+  testApi = () => {
+    const { tittle, body, userId } = this.state;
+    axios
+      .post(
+        "https://jsonplaceholder.typicode.com/posts",
+        {
+          title: tittle,
+          body: body,
+          userId: userId
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+            //other header fields
+          }
+        }
+      )
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   render() {
     return <AppNavigator />;
   }
@@ -51,5 +83,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#333333",
     marginBottom: 5
+  },
+  input: {
+    borderRadius: 0,
+    borderWidth: 0,
+    borderBottomColor: theme.colors.border,
+    borderBottomWidth: 1
   }
 });

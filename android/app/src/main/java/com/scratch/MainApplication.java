@@ -3,6 +3,7 @@ package com.scratch;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import cl.json.RNSharePackage;
 import com.imagepicker.ImagePickerPackage;
 
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new RNSharePackage(),
             new ImagePickerPackage(),
                     new SplashScreenReactPackage(),
                     new RNGestureHandlerPackage(),

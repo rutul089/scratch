@@ -8,6 +8,7 @@ import {
   TextInput,
   Image,
   ScrollView,
+  Keyboard,
   TouchableNativeFeedback,
   TouchableOpacity,
   ImageBackground,
@@ -22,7 +23,7 @@ const { width, height } = Dimensions.get("window");
 // create a component
 class Search extends Component {
   state = {
-    searchWord: "",
+    search: "",
     trending: [],
     recommendation: []
   };
@@ -30,26 +31,32 @@ class Search extends Component {
   componentDidMount() {
     this.setState({
       trending: this.props.trending,
-      recommendation: this.props.trending
+      recommendation: this.props.recommendation
     });
   }
-  handleSearch = () => {
-    const { trending, recommendation } = this.props;
-    let word = this.state.searchWord;
-    if (word.length > 1 && word !== "") {
-      // const filtered = trending.filter(category => category.tag.toLowerCase().includes(tab));
-      const filtered = trending.filter(
-        category =>
-          category.recipeName.toLowerCase().indexOf(word.toLowerCase()) !== -1
-      );
-      this.setState({ trending: filtered });
-      console.log(filtered);
-    }
 
-    // const filtered = recipeList.filter(category => category.tag.includes(tab));
+  _updateSearch = text => {
+    let keyword = text;
+    const { trending, recommendation } = this.props;
+    this.setState({
+      search: text
+    });
+    // let word = this.state.search;
+
+    // if (word.length > 1 && word !== "") {
+    //   let filterTrending = trending.filter(
+    //     name => name.recipeName.toLowerCase().indexOf(word.toLowerCase()) > -1
+    //   );
+    //   this.setState({ trending: filterTrending });
+    // } else {
+    //   this.setState({
+    //     trending: mocks.trending,
+    //     recommendation: mocks.recommended
+    //   });
+    // }
   };
+
   renderSearchView() {
-    console.log(this.state.searchWord);
     return (
       <Block
         flex={false}
@@ -67,11 +74,11 @@ class Search extends Component {
               <TextInput
                 underlineColorAndroid="transparent"
                 placeholder="Search recipe, people, or tag"
-                onChangeText={text => this.setState({ searchWord: text })}
+                onChangeText={text => this._updateSearch(text)}
                 placeholderTextColor="grey"
                 style={styles.input}
               />
-              <TouchableOpacity onPress={() => this.handleSearch()}>
+              <TouchableOpacity onPress={() => Keyboard.dismiss()}>
                 <Image
                   source={require("../../assets/image/icons/ic_filter.png")}
                   style={[styles.iconStyle, { tintColor: theme.colors.black }]}
@@ -124,37 +131,13 @@ class Search extends Component {
     );
   }
 
-  /*
-  renderRecommendationItem(item) {
-    return (
-      <Block flex={0} shadow column style={styles.recommendation}>
-        <Block flex={0} color="#F1F4F9">
-          <Image
-            resizeMode="cover"
-            style={[styles.recommendationImage]}
-            source={item.image}
-          />
-        </Block>
-        <Block
-          flex={0}
-          shadow
-          column
-          style={{
-            height: theme.sizes.padding * 2.8,
-            padding: theme.sizes.padding / 3
-          }}
-        >
-          <Text weight={"400"} button black>
-            {item.recipeName}
-          </Text>
-        </Block>
-      </Block>
-    );
-  }
-  */
   //-- Render Trending
   renderTrending = () => {
-    const { trending } = this.props;
+    const { trending } = this.state;
+    const { search } = this.state;
+    let filterTrending = trending.filter(
+      name => name.recipeName.toLowerCase().indexOf(search.toLowerCase()) > -1
+    );
     return (
       <Block column flex={0}>
         <FlatList
@@ -163,7 +146,7 @@ class Search extends Component {
           scrollEnabled
           showsHorizontalScrollIndicator={false}
           scrollEventThrottle={16}
-          data={trending}
+          data={filterTrending}
           keyExtractor={(item, index) => `${index}`}
           renderItem={({ item }) => this.renderRecommendationItem(item)}
         />
@@ -172,7 +155,13 @@ class Search extends Component {
   };
   //--suggestedRecipe
   suggestedRecipe = () => {
-    const { recommendation } = this.props;
+    const { recommendation } = this.state;
+    const { search } = this.state;
+    let filterTrending = recommendation.filter(
+      name =>
+        name.recipeName.toLowerCase().indexOf(search.toLowerCase()) > -1
+    );
+
     return (
       <Block column flex={0}>
         <FlatList
@@ -181,13 +170,14 @@ class Search extends Component {
           scrollEnabled
           showsHorizontalScrollIndicator={false}
           scrollEventThrottle={16}
-          data={recommendation}
+          data={filterTrending}
           keyExtractor={(item, index) => `${index}`}
           renderItem={({ item }) => this.renderRecommendationItem(item)}
         />
       </Block>
     );
   };
+
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -312,6 +302,7 @@ const styles = StyleSheet.create({
     elevation: 5
   }
 });
+
 Search.defaultProps = {
   trending: mocks.trending,
   recommendation: mocks.recommended

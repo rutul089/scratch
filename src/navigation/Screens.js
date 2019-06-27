@@ -61,6 +61,12 @@ export default createStackNavigator({
   DashboardTabNavigator: DashboardTabNavigator
 });
 
+// export default createAppContainer(
+//   createStackNavigator({
+//     DashboardTabNavigator: DashboardTabNavigator
+//   })
+// );
+
 const styles = StyleSheet.create({
   iconStyle: {
     width: theme.sizes.iconSize,
