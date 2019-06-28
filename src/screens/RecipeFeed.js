@@ -88,7 +88,7 @@ class RecipeFeed extends Component {
       title: "Share Recipe",
       message: item.userName,
       url: "http://facebook.github.io/react-native/",
-      subject: item.recipeName + "Recipe By" //  for email
+      subject: item.recipeName + " Recipe By" //  for email
     };
     const { recipe } = this.state;
     return (

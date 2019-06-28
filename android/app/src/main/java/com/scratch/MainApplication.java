@@ -3,6 +3,7 @@ package com.scratch;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 import cl.json.RNSharePackage;
 import com.imagepicker.ImagePickerPackage;
 
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new RNFusedLocationPackage(),
             new RNSharePackage(),
             new ImagePickerPackage(),
                     new SplashScreenReactPackage(),

@@ -6,20 +6,72 @@ import {
   SafeAreaView,
   FlatList,
   TextInput,
-  Image,
   ScrollView,
   Keyboard,
   TouchableNativeFeedback,
+  Image,
+  PermissionsAndroid,
   TouchableOpacity,
   ImageBackground,
   Dimensions
 } from "react-native";
 import { theme, mocks } from "../constants";
 import { CardItem, Card, Left, Body, Right, Content } from "native-base";
-import { Block, Input, Text } from "../components";
+import { Block, Input, Text, ImagePlaceholder } from "../components";
 import { Thumbnail } from "native-base";
+import Geolocation from "react-native-geolocation-service";
+import { Platform } from "react-native";
 
 const { width, height } = Dimensions.get("window");
+//-- Function for checking location and getting current location
+export function getLocation() {
+  Geolocation.getCurrentPosition(
+    position => {
+      console.log(
+        "Your Current latitude is " +
+          position.coords.latitude +
+          " and longitude " +
+          position.coords.longitude +
+          " <----- Location"
+      );
+      console.log(JSON.stringify(position) + " <----- Location");
+    },
+    error => {
+      // See error code charts below.
+      console.log(error.code, error.message + " <----- errir");
+    },
+    { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+  );
+}
+
+export async function requestLocationPermission() {
+  try {
+    if (Platform.OS === "ios") {
+      getLocation();
+    } else {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: "Location Permission",
+          message: "Allow Scratch to access this device's location ? "
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        getLocation();
+      } else {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: "Location Permission",
+            message: "Allow Scratch to access this device's location ? "
+          }
+        );
+      }
+    }
+  } catch (err) {
+    console.warn(err + "====>");
+  }
+}
 // create a component
 class Search extends Component {
   state = {
@@ -28,34 +80,25 @@ class Search extends Component {
     recommendation: []
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({
       trending: this.props.trending,
       recommendation: this.props.recommendation
     });
+
+    await requestLocationPermission();
   }
 
+  //-- To update search value
   _updateSearch = text => {
     let keyword = text;
     const { trending, recommendation } = this.props;
     this.setState({
       search: text
     });
-    // let word = this.state.search;
-
-    // if (word.length > 1 && word !== "") {
-    //   let filterTrending = trending.filter(
-    //     name => name.recipeName.toLowerCase().indexOf(word.toLowerCase()) > -1
-    //   );
-    //   this.setState({ trending: filterTrending });
-    // } else {
-    //   this.setState({
-    //     trending: mocks.trending,
-    //     recommendation: mocks.recommended
-    //   });
-    // }
   };
 
+  //-- UI for search view
   renderSearchView() {
     return (
       <Block
@@ -90,10 +133,12 @@ class Search extends Component {
       </Block>
     );
   }
+
+  //-- UI for recommendation item
   renderRecommendationItem(item) {
     return (
       <Block flex={0}>
-        <TouchableOpacity onPress={() => alert("test")}>
+        <TouchableOpacity activeOpacity={1} onPress={() => alert("test")}>
           <Card style={styles.recommendation}>
             <Image
               resizeMode="cover"
@@ -153,13 +198,13 @@ class Search extends Component {
       </Block>
     );
   };
+
   //--suggestedRecipe
   suggestedRecipe = () => {
     const { recommendation } = this.state;
     const { search } = this.state;
     let filterTrending = recommendation.filter(
-      name =>
-        name.recipeName.toLowerCase().indexOf(search.toLowerCase()) > -1
+      name => name.recipeName.toLowerCase().indexOf(search.toLowerCase()) > -1
     );
 
     return (
@@ -274,6 +319,7 @@ const styles = StyleSheet.create({
     marginVertical: theme.sizes.padding * 0.5
   },
   recommendationImage: {
+    backgroundColor: theme.colors.accent,
     width: (width - theme.sizes.padding * 2) / 2.5,
     height: (width - theme.sizes.padding * 3.2) / 2
   },

@@ -6,12 +6,12 @@ import {
   createBottomTabNavigator
 } from "react-navigation";
 import RecipeFeed from "./../screens/RecipeFeed";
-
 import { theme } from "../constants";
 import Search from "../screens/Search";
 import Profile from "../screens/Profile";
 import RecipeNav from "./RecipeNav";
-import { Icon } from "native-base";
+
+import { Icon ,Content} from "native-base";
 import ProfileSetting from "./ProfileSetting";
 
 //-- Exporting navigation class

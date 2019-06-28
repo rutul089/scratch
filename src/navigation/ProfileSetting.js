@@ -12,6 +12,7 @@ const Screens = createStackNavigator(
   { Profile, Settings, ChangePwd, EditProfile },
   {
     defaultNavigationOptions: {
+      tabBarVisible: false,
       headerStyle: {
         height: theme.sizes.base * 4,
 

@@ -14,8 +14,35 @@ import { Block, Text, Button, Input } from "../components";
 import { theme } from "../constants";
 import { Content } from "native-base";
 const { width, height } = Dimensions.get("window");
+import DateTimePicker from "react-native-modal-datetime-picker";
+import moment from "moment";
 // create a component
 class SignUp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isVisible: false,
+      selectedDate: "dd/MM/YYYY"
+    };
+  }
+
+  handlePicker = dateTime => {
+    this.setState({
+      isVisible: false,
+      selectedDate: moment(dateTime).format("DD MMM YYYY")
+    });
+  };
+  showPicker = () => {
+    this.setState({
+      isVisible: true
+    });
+  };
+  hidePicker = () => {
+    this.setState({
+      isVisible: false
+    });
+  };
+
   static navigationOptions = ({ navigation }) => {
     return {
       header: (
@@ -96,6 +123,39 @@ class SignUp extends Component {
                 defaultValue="user@email.com"
                 style={styles.input}
               />
+              <Block
+                row
+                center
+                style={{
+                  justifyContent: "space-between",
+                  marginTop: theme.sizes.base,
+                  marginBottom: theme.sizes.padding
+                }}
+              >
+                <Text color={theme.colors.caption} size={theme.sizes.font - 1}>
+                  Date Of Birth
+                </Text>
+                <TouchableOpacity
+                  activeOpacity={1}
+                  onPress={() => this.showPicker()}
+                >
+                  <Image
+                    style={{
+                      height: theme.sizes.iconSize - 10,
+                      width: theme.sizes.iconSize - 10,
+                      tintColor: theme.colors.black
+                    }}
+                    source={require("../../assets/image/icons/ic_time.png")}
+                  />
+                </TouchableOpacity>
+              </Block>
+              <DateTimePicker
+                isVisible={this.state.isVisible}
+                onConfirm={this.handlePicker}
+                onCancel={this.hidePicker}
+                mode={"date"}
+              />
+              <Text style={styles.dateStyle}>{this.state.selectedDate}</Text>
               <Button
                 color={theme.colors.primary}
                 onPress={() => this.props.navigation.navigate("Main")}
@@ -157,6 +217,16 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0
+  },
+  dateStyle: {
+    borderColor: theme.colors.black,
+    borderRadius: theme.sizes.radius,
+    fontSize: theme.sizes.font,
+    fontWeight: "400",
+    color: theme.colors.black,
+    borderBottomColor: theme.colors.gray3,
+    borderBottomWidth: 1,
+    height: theme.sizes.base * 2
   }
 });
 

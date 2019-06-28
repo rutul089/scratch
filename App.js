@@ -28,7 +28,7 @@ import Screens from "./src/navigation/Screens";
 
 export default class App extends Component {
   componentDidMount() {
-    SplashScreen.hide();
+   
   }
 
   state = {

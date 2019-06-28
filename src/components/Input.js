@@ -46,7 +46,7 @@ export default class Input extends Component {
         ) : (
           <Icon
             color={theme.colors.gray}
-            style={{ color: theme.colors.inActiveColor}}
+            style={{ color: theme.colors.inActiveColor }}
             size={theme.sizes.font * 1.35}
             name={!toggleSecure ? "md-eye" : "md-eye-off"}
             type="Ionicons"

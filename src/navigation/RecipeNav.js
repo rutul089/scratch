@@ -7,7 +7,10 @@ import RecipeFeed from "./../screens/RecipeFeed";
 import ViewRecipe from "./../screens/ViewRecipe";
 
 const Screens = createStackNavigator(
-  { RecipeFeed, ViewRecipe },
+  {
+    RecipeFeed,
+    ViewRecipe
+  },
   {
     defaultNavigationOptions: {
       headerStyle: {
